@@ -1,0 +1,156 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+  <link rel="stylesheet" href="css/style.css">
+  <meta name="description" content="">
+
+  <meta property="og:title" content="">
+  <meta property="og:type" content="">
+  <meta property="og:url" content="">
+  <meta property="og:image" content="">
+  <meta property="og:image:alt" content="">
+
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.png">
+
+  <link rel="manifest" href="site.webmanifest">
+  <meta name="theme-color" content="#fafafa">
+</head>
+
+<body>
+
+<!-- Add your site or application content here -->
+<p>Hello world! This is HTML5 Boilerplate.</p>
+<script>
+  // Створюємо перший об'єкт для телескопа
+  const telescope = {};  // ініціалізація порожнім об'єктом
+  telescope.brand = "Celestron";  // бренд - загальна властивість об'єктів
+  // Запитуємо модель у користувача через prompt (працює в браузері)
+  // https://developer.mozilla.org/en-US/docs/Web/API/Window/prompt
+  telescope.model = prompt(`Зазначте модель телескопа ${telescope.brand}: `);
+  // Вибираємо оптичну конструкцію через діалог (працює в браузері)
+  // https://developer.mozilla.org/en-US/docs/Web/API/Window/confirm
+  const opticalDesignBool = confirm("Визначтесь з оптичною конструкцією: " +
+    "\nОК = Рефрактор, Скасувати = Рефлектор");
+  // Призначаємо значення opticalDesign залежно від вибору користувача!
+  telescope.opticalDesign = opticalDesignBool ? "Рефрактор" : "Рефлектор";
+
+  // Створюємо другий об'єкт для бутля води
+  const waterBottle = new Object();  // за допомогою конструктора Object
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/Object
+  waterBottle.brand = "Моршинська";
+  waterBottle.capacity = 6;  // шестилітровий бутель
+  //waterBottle["expiration date"] = "05.06.26";  // формат дати "Моршинської"!
+
+  // Отримуємо поточну дату для визначення дати виробництва
+  const manufactureDate = new Date();
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
+  //const manufactureDate = new Date("2024-02-29");  // обробляє високосний рік!
+  // Створюємо дату терміну придатності на основі дати виробництва
+  const expirationDate = new Date(manufactureDate);
+  // Додаємо один рік до дати виробництва для терміну придатності
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setFullYear
+  expirationDate.setFullYear(manufactureDate.getFullYear() + 1);
+  // Форматуємо день, додаючи провідний нуль, якщо потрібно
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/padStart
+  const day = String(expirationDate.getDate()).padStart(2, "0");
+  // Форматуємо місяць, додаючи провідний нуль і враховуючи,
+  // що getMonth() повертає 0-11
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getMonth
+  const month = String(expirationDate.getMonth() + 1).padStart(2, "0");
+  // Беремо останні дві цифри року
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/slice
+  const year = String(expirationDate.getFullYear()).slice(-2);
+  // Формуємо рядок дати у форматі ДД.MM.РР
+  const formattedExpirationDate = `${day}.${month}.${year}`;
+  // Додаємо властивість терміну придатності до об'єкта waterBottle
+  waterBottle["expiration date"] = formattedExpirationDate;
+
+  // Створюємо третій об'єкт – для автомобіля – з трьома властивостями
+  const car = {
+    brand: "Mercedes-Benz",
+    model: "S-Class",
+    color: "чорний",
+  };
+
+  // Збираємо всі три об'єкти в масив за умовою домашнього завдання
+  const week24HomeworkObjects = [telescope, waterBottle, car];
+
+  /* Масив передати у функцію,
+  функція має відсортувати об'єкти та показати їх відсортованими
+  (через alert або console.log)
+   */
+
+  // Функція для сортування об'єктів за властивістю brand
+  function sortByBrand(arr) {
+    // Перевіряємо, чи масив не порожній
+    if (arr.length === 0) {
+      console.log("Масив порожній!");
+      return [];
+    }
+
+    // Створюємо копію масиву та сортуємо її за брендом
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
+    const sorted = [...arr].sort((a, b) => {
+      // Переводимо бренди в нижній регістр для регістронезалежного порівняння
+      const brandA = a.brand.toLowerCase();
+      const brandB = b.brand.toLowerCase();
+      // Сортуємо з українською локаллю для коректного порядку кирилиці
+      // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/localeCompare
+      return brandA.trim().localeCompare(brandB, "uk-UA");
+    });
+
+    console.log("Відсортовані об'єкти за брендом:");
+    let count = 0;  // лічильник для нумерації об'єктів
+    /* Альтернативний спосіб виведення через цикл for...of
+    for (const obj of sorted) {
+      console.log(obj);
+    }
+     */
+    // Виводимо кожен об'єкт із номером, використовуючи метод Array forEach
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach
+    sorted.forEach(obj => {
+      count++;
+      console.log(`Об'єкт ${count}:`, obj);
+    })
+    console.log(`Усього задано ${count} об'єктів!`);
+
+    return sorted;  // повертаємо відсортований масив!
+  }
+
+  // Викликаємо функцію сортування з масивом об'єктів
+  sortByBrand(week24HomeworkObjects);
+
+
+  // Практика на рекурсію.
+  // Напишіть функцію для виведення усіх множників, переданих числу
+  // у зростаючому порядку. Наприклад: число 18 — множники 2*3*3.
+
+  function primeFactors(n, divisor = 2, factors = [], number = null) {
+    if (number === null) number = n;
+
+    if (n < 2) {
+      alert(`Число ${number} – множники: ${factors.join('*')}`);
+      return {number, factors};
+    }
+
+    if (n % divisor === 0) {
+      factors.push(divisor);
+      return primeFactors(n / divisor, divisor, factors, number);
+    }
+
+    return primeFactors(n, divisor + 1, factors, number);
+  }
+
+  primeFactors(2025);
+
+</script>
+
+</body>
+
+</html>
